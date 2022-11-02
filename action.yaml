@@ -5,6 +5,9 @@ inputs:
   PAT:  # id of input
     description: 'PAT from repo'
     required: true
+  repository:
+    description: 'github repository'
+    required: true
 outputs:
   tester:
     description: "outcome of the tester"
@@ -26,7 +29,7 @@ runs:
       file: ./Dockerfile
       push: true
       target: test
-      tags: ghcr.io/${{ github.repository }}:test
+      tags: ghcr.io/${{ inputs.repository }}:test
       cache-from: type=gha
       cache-to: type=gha,mode=max
       build-args: |
@@ -36,7 +39,7 @@ runs:
     id: testrunner
     if: steps.tester.outcome == 'success'
     run: |
-      docker run --rm ghcr.io/${{ github.repository }}:test 
+      docker run --rm ghcr.io/${{ inputs.repository }}:test 
     shell: bash
 
   - name: Set output
