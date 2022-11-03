@@ -17,10 +17,13 @@ outputs:
     description: "outcome of the testrunner"
     value: steps.testrunner.outcome
 
+
 runs:
   using: 'composite'
   steps:
   - name: Set up docker buildx for tester
+    env:
+      PAT: ${{ inputs.PAT }}
     id: tester
     continue-on-error: true
     uses: docker/build-push-action@v3
@@ -33,7 +36,7 @@ runs:
       cache-from: type=gha
       cache-to: type=gha,mode=max
       build-args: |
-       ${{ inputs.PAT }}
+       ${{ env.PAT }}
 
   - name: Test
     id: testrunner
