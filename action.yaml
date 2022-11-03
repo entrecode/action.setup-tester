@@ -2,8 +2,8 @@ name: Tester
 description: 'If a Layer tester in a Dockerfile exists, the action will set up docker buildx for the tester Layer and runs the tests'
 
 inputs:
-  PAT:  
-    description: 'PAT from repo'
+  token:  
+    description: 'token from repo'
     required: true
   repository:
     description: 'github repository'
@@ -23,7 +23,7 @@ runs:
   steps:
   - name: Set up docker buildx for tester
     env:
-      PAT: ${{ inputs.PAT }}
+      PAT: ${{ inputs.token }}
     id: tester
     continue-on-error: true
     uses: docker/build-push-action@v3
@@ -36,7 +36,7 @@ runs:
       cache-from: type=gha
       cache-to: type=gha,mode=max
       build-args: |
-       ${{ PAT }}
+       ${{ env.PAT }}
 
   - name: Test
     id: testrunner
