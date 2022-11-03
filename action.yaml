@@ -1,13 +1,14 @@
-name: Set up docker buildx for tester runs test
-description: 'If a Layer tester exists in Dockerfile the action will set up docker buildx for the tester Layer and runs the tests'
+name: Tester
+description: 'If a Layer tester in a Dockerfile exists, the action will set up docker buildx for the tester Layer and runs the tests'
 
 inputs:
-  PAT:  # id of input
+  PAT:  
     description: 'PAT from repo'
     required: true
   repository:
     description: 'github repository'
     required: true
+
 outputs:
   tester:
     description: "outcome of the tester"
@@ -15,7 +16,6 @@ outputs:
   testrunner:
     description: "outcome of the testrunner"
     value: steps.testrunner.outcome
-
 
 runs:
   using: 'composite'
@@ -34,17 +34,10 @@ runs:
       cache-to: type=gha,mode=max
       build-args: |
        ${{ inputs.PAT }}
-        
+
   - name: Test
     id: testrunner
     if: steps.tester.outcome == 'success'
     run: |
       docker run --rm ghcr.io/${{ inputs.repository }}:test 
     shell: bash
-
-  - name: Set output
-    id: set-output
-    run: |
-      echo "tester=steps.tester.outcome >> $GITHUB_OUTPUT
-      echo "tesrunner=steps.testrunner.outcome >> $GITHUB_OUTPUT
-    shell: bash 
