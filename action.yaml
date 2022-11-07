@@ -44,7 +44,7 @@ runs:
     id: testrunner
     if: steps.tester.outcome == 'success'
     run: |
-      docker run --rm ghcr.io/${{ inputs.repository }}:test 
+      docker run --rm ghcr.io/${{ inputs.repository }}:test-action 
     shell: bash
 
   - name: check - outcome
