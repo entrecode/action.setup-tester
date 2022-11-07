@@ -30,7 +30,7 @@ runs:
       context: .
       file: ./Dockerfile
       push: true
-      target: test
+      target: tester
       tags: ghcr.io/${{ inputs.repository }}:tester
       cache-from: type=gha
       cache-to: type=gha,mode=max
