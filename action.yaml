@@ -1,6 +1,8 @@
 name: Tester
 description: 'If a Layer tester in a Dockerfile exists, the action will set up docker buildx for the tester Layer and runs the tests'
 
+
+
 inputs:
   token:  
     description: 'token from repo'
@@ -22,8 +24,7 @@ runs:
   using: 'composite'
   steps:
   - name: Set up docker buildx for tester
-    env:
-      PAT: ${{ inputs.token }}
+
     id: tester
     continue-on-error: true
     uses: docker/build-push-action@v3
@@ -36,7 +37,7 @@ runs:
       cache-from: type=gha
       cache-to: type=gha,mode=max
       build-args: |
-       ${{ env.PAT }}
+       PAT=${{ inputs.PAT }}
 
   - name: Test
     id: testrunner
