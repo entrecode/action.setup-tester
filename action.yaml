@@ -54,5 +54,5 @@ runs:
     shell: bash
 
   - name: check outcome
-    run: echo ${{ steps.tester.outcome }} | ${{ steps.testrunner.outcome }}
+    run: echo ${{ steps.tester.outcome }} - ${{ steps.testrunner.outcome }}
     shell: bash
