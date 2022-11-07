@@ -23,7 +23,7 @@ outputs:
     value: ${{ steps.tester.outcome }}
   testrunner:
     description: "outcome of the testrunner"
-    value: steps.testrunner.outcome
+    value: ${{ steps.testrunner.outcome }}
 
 
 runs:
