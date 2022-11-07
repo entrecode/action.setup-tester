@@ -52,3 +52,7 @@ runs:
     run: |
       docker run --rm ghcr.io/${{ inputs.repository }}:test 
     shell: bash
+
+  - name: check outcome
+    run: echo ${{ steps.tester.outcome }} | ${{ steps.testrunner.outcome }}
+    shell: bash
