@@ -1,5 +1,5 @@
 name: Tester
-description: 'If a Layer tester in a Dockerfile exists, the action will set up docker buildx for the tester Layer and runs the tests'
+description: 'If a layer tester in a Dockerfile exists, the action will set up docker buildx for the tester Layer and runs the tests'
 
 inputs:
   token:  
