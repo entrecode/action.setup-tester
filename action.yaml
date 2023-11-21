@@ -27,32 +27,28 @@ runs:
       echo "${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
-  - name: Display inputs outcome
+  - name: Test if input has value 1.1
+    if: ${{ inputs.ACTION_ENABLE_TESTING }}
     run: |
-      echo "${{steps.display_inputs.outcome}}"
-    shell: bash
-    
-  - name: Test if both inputs are false 1.1
-    if: ${{inputs.TESTING_WITH_DB == 'false' && inputs.ACTION_ENABLE_TESTING == 'false'}}
-    run: |
-      echo "1.1 if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "1.1 ${{ inputs.ACTION_ENABLE_TESTING }}"
     shell: bash
 
-  - name: Test if both inputs are false 1.2
-    if:  inputs.TESTING_WITH_DB == 'false' && inputs.ACTION_ENABLE_TESTING == 'false'
+  - name: Test if input has value 1.2
+    if: inputs.ACTION_ENABLE_TESTING
     run: |
-      echo "1.1 if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "1.2 ${{ inputs.ACTION_ENABLE_TESTING }}"
     shell: bash
 
-  - name: Test if one input is true
-    if: (inputs.ACTION_ENABLE_TESTING == 'true' || inputs.TESTING_WITH_DB == 'true') && steps.display_inputs.outcome == 'Success'
+  - name: Test if input has value 2.1
+    if: ${{ inputs.ACTION_ENABLE_TESTING == '' }}
     run: |
-      echo "2 if one true ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "1.1 ${{ inputs.ACTION_ENABLE_TESTING }}"
     shell: bash
 
-  - name: Test fromJson
+  - name: Test if input has value 2.2
+    if: inputs.ACTION_ENABLE_TESTING == ''
     run: |
-      echo "${{ fromJSON(inputs.ACTION_ENABLE_TESTING) }} ${{ fromJSON(inputs.TESTING_WITH_DB) }}"
+      echo "1.2 ${{ inputs.ACTION_ENABLE_TESTING }}"
     shell: bash
 
   - name: Test fromJson outcome false flase
