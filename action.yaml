@@ -40,15 +40,15 @@ runs:
     shell: bash
 
   - name: Test if input has value 2.1
-    if: ${{ inputs.ACTION_ENABLE_TESTING == '' }}
+    if: ${{ inputs.ACTION_ENABLE_TESTING != inputs.ACTION_ENABLE_TESTING.default && inputs.ACTION_ENABLE_TESTING != 'true' }}
     run: |
-      echo "1.1 ${{ inputs.ACTION_ENABLE_TESTING }}"
+      echo "2.1 ${{ inputs.ACTION_ENABLE_TESTING }}"
     shell: bash
 
   - name: Test if input has value 2.2
     if: inputs.ACTION_ENABLE_TESTING == ''
     run: |
-      echo "1.2 ${{ inputs.ACTION_ENABLE_TESTING }}"
+      echo "2.2 ${{ inputs.ACTION_ENABLE_TESTING }}"
     shell: bash
 
   - name: Test fromJson outcome false flase
