@@ -31,11 +31,16 @@ runs:
   - name: Test if both inputs are false
     if: (${{inputs.ACTION_ENABLE_TESTING}} == 'false' && ${{inputs.TESTING_WITH_DB}} == 'false')
     run: |
-      echo "if ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
   - name: Test if one input is true
     if: (inputs.ACTION_ENABLE_TESTING == 'true' || inputs.TESTING_WITH_DB == 'true') && steps.display_inputs.outcome == 'Success'
     run: |
-      echo "if ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "if one true ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+    shell: bash
+
+  - name: Test fromJson
+    run: |
+      echo "${{ fromJSON(inputs.ACTION_ENABLE_TESTING) }} ${{ fromJSON(inputs. TESTING_WITH_DB) }}""
     shell: bash
