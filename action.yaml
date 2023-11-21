@@ -52,7 +52,7 @@ runs:
 
   - name: Test fromJson
     run: |
-      echo "${{ fromJSON(inputs.ACTION_ENABLE_TESTING) fromJSON(inputs.TESTING_WITH_DB) }}"
+      echo "${{ fromJSON(inputs.ACTION_ENABLE_TESTING) }} ${{ fromJSON(inputs.TESTING_WITH_DB) }}"
     shell: bash
 
   - name: Test fromJson outcome false flase
