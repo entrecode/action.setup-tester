@@ -2,44 +2,28 @@ name: Tester
 description: 'If a layer tester in a Dockerfile exists, the action will set up docker buildx for the tester Layer and runs the tests'
 
 inputs:
-  token:  
-    description: 'token from repo'
-    required: true
-  repository:
-    description: 'github repository'
-    required: true
-
-outputs:
-  tester:
-    description: "outcome of the tester"
-    value: ${{ steps.tester.outcome }}
-  testrunner:
-    description: "outcome of the testrunner"
-    value: ${{ steps.testrunner.outcome }}
+  DB_TESTDATA_FILEPATH:
+    description: 'path to the testdata file'
+    required: false
+    default: 'false'
+  ACTION_ENABLE_TESTING:
+    description: 'if set to true, testcontainer will be created and tests will be run'
+    required: false
+    default: 'false'
 
 runs:
   using: 'composite'
   steps:
-  - name: Set up docker buildx for tester
-    env:
-      PAT: ${{ inputs.token }}
-    id: tester
-    continue-on-error: true
-    uses: docker/build-push-action@v3
-    with:
-      context: .
-      file: ./Dockerfile
-      push: true
-      target: tester
-      tags: ghcr.io/${{ inputs.repository }}:tester
-      cache-from: type=gha
-      cache-to: type=gha,mode=max
-      build-args: |
-       PAT=${{ env.PAT }}
+  - name: Checkout code
+    uses: actions/checkout@v3
 
-  - name: Test
-    id: testrunner
-    if: steps.tester.outcome == 'success'
+  - name: Display inputs
     run: |
-      docker run --rm ghcr.io/${{ inputs.repository }}:tester 
+      echo "{{inputs.ACTION_ENABLE_TESTING}} {{inputs.TESTING_WITH_DB}}"
+    shell: bash
+    
+  - name: Test if 
+    if: (inputs.ACTION_ENABLE_TESTING == 'false' && inputs.TESTING_WITH_DB == 'false')
+    run: |
+      echo "if {{inputs.ACTION_ENABLE_TESTING}} {{inputs.TESTING_WITH_DB}}"
     shell: bash
