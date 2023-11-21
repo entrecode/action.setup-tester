@@ -31,14 +31,14 @@ runs:
     if: ${{ inputs.ACTION_ENABLE_TESTING == '' }}
     run: |
       echo "2.1 ${{ inputs.ACTION_ENABLE_TESTING }}"
-      ${{ inputs.ACTION_ENABLE_TESTING = 'false' }}
+      ${{ inputs.ACTION_ENABLE_TESTING =='false' }}
     shell: bash
 
   - name: Test if input has value 2.2
     if: inputs.ACTION_ENABLE_TESTING == ''
     run: |
       echo "2.2 ${{ inputs.ACTION_ENABLE_TESTING }}"
-      ${{ inputs.ACTION_ENABLE_TESTING = 'false' }}
+      ${{ inputs.ACTION_ENABLE_TESTING == 'false' }}
     shell: bash
 
   - name: display inputs
