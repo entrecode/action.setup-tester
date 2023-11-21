@@ -27,28 +27,23 @@ runs:
       echo "${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
-  - name: Test if input has value 1.1
-    if: ${{ inputs.ACTION_ENABLE_TESTING }}
-    run: |
-      echo "1.1 ${{ inputs.ACTION_ENABLE_TESTING }}"
-    shell: bash
-
-  - name: Test if input has value 1.2
-    if: inputs.ACTION_ENABLE_TESTING
-    run: |
-      echo "1.2 ${{ inputs.ACTION_ENABLE_TESTING }}"
-    shell: bash
-
   - name: Test if input has value 2.1
-    if: ${{ inputs.ACTION_ENABLE_TESTING != inputs.ACTION_ENABLE_TESTING.default && inputs.ACTION_ENABLE_TESTING != 'true' }}
+    if: ${{ inputs.ACTION_ENABLE_TESTING == '' }}
     run: |
       echo "2.1 ${{ inputs.ACTION_ENABLE_TESTING }}"
+      inputs.ACTION_ENABLE_TESTING = 'false'
     shell: bash
 
   - name: Test if input has value 2.2
     if: inputs.ACTION_ENABLE_TESTING == ''
     run: |
       echo "2.2 ${{ inputs.ACTION_ENABLE_TESTING }}"
+      inputs.ACTION_ENABLE_TESTING = 'false'
+    shell: bash
+
+  - name: display inputs
+    run: |
+      echo "${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
   - name: Test fromJson outcome false flase
