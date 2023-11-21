@@ -28,6 +28,7 @@ runs:
     shell: bash
 
   - name: Test if input has value 2.1
+    id: tester
     if: ${{ inputs.ACTION_ENABLE_TESTING == '' }}
     run: |
       echo "2.1 ${{ inputs.ACTION_ENABLE_TESTING.default }}"
@@ -40,7 +41,7 @@ runs:
     shell: bash
 
   - name: Test fromJson outcome false flase
-    if: ${{ !fromJSON(inputs.ACTION_ENABLE_TESTING) && !fromJSON(inputs.TESTING_WITH_DB) }}
+    if: ${{ !fromJSON(inputs.ACTION_ENABLE_TESTING.default) && !fromJSON(inputs.TESTING_WITH_DB.default) &&  steps.tester.outcome == 'success' }} || ${{ !fromJSON(inputs.ACTION_ENABLE_TESTING) && !fromJSON(inputs.TESTING_WITH_DB) }}
     run: |
       echo "3 if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
