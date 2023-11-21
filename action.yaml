@@ -32,10 +32,16 @@ runs:
       echo "${{steps.display_inputs.outcome}}"
     shell: bash
     
-  - name: Test if both inputs are false
+  - name: Test if both inputs are false 1.1
     if: ${{inputs.TESTING_WITH_DB == 'false' && inputs.ACTION_ENABLE_TESTING == 'false'}}
     run: |
-      echo "1 if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "1.1 if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+    shell: bash
+
+  - name: Test if both inputs are false 1.2
+    if:  inputs.TESTING_WITH_DB == 'false' && inputs.ACTION_ENABLE_TESTING == 'false'
+    run: |
+      echo "1.1 if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
   - name: Test if one input is true
