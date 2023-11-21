@@ -58,7 +58,13 @@ runs:
   - name: Test fromJson outcome false flase
     if: ${{ fromJSON(inputs.ACTION_ENABLE_TESTING) == 'false' && fromJSON(inputs.TESTING_WITH_DB) == 'false' }}
     run: |
-      echo "3 if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "3.1 if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+    shell: bash
+
+  - name: Test fromJson outcome false flase
+    if: ${{ fromJSON(inputs.ACTION_ENABLE_TESTING) && fromJSON(inputs.TESTING_WITH_DB) }}
+    run: |
+      echo "3.2 if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
   - name: Test fromJson outcome false true
@@ -70,7 +76,13 @@ runs:
   - name: Test fromJson outcome true flase
     if: ${{ fromJSON(inputs.ACTION_ENABLE_TESTING) == 'true' && fromJSON(inputs.TESTING_WITH_DB) == 'false' }}
     run: |
-      echo "5 if true false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "5.1 if true false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+    shell: bash
+
+  - name: Test fromJson outcome true flase
+    if: ${{ fromJSON(inputs.ACTION_ENABLE_TESTING) || fromJSON(inputs.TESTING_WITH_DB) }}
+    run: |
+      echo "5.2 if true false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
   - name: Test fromJson outcome true true
