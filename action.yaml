@@ -18,12 +18,24 @@ runs:
     uses: actions/checkout@v3
 
   - name: Display inputs
+    id: display_inputs
     run: |
       echo "${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
+
+  - name: Display inputs outcome
+    run: |
+      echo "${{display_inputs.outcome}}"
+    shell: bash
     
-  - name: Test if 
-    if: (inputs.ACTION_ENABLE_TESTING == 'false' && inputs.TESTING_WITH_DB == 'false')
+  - name: Test if both inputs are false
+    if: (${{inputs.ACTION_ENABLE_TESTING}} == 'false' && ${{inputs.TESTING_WITH_DB}} == 'false')
+    run: |
+      echo "if ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+    shell: bash
+
+  - name: Test if one input is true
+    if: (inputs.ACTION_ENABLE_TESTING == 'true' || inputs.TESTING_WITH_DB == 'true') && display_inputs.outcome == 'Success'
     run: |
       echo "if ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
