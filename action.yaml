@@ -2,8 +2,8 @@ name: Tester
 description: 'If a layer tester in a Dockerfile exists, the action will set up docker buildx for the tester Layer and runs the tests'
 
 inputs:
-  DB_TESTDATA_FILEPATH:
-    description: 'path to the testdata file'
+  TESTING_WITH_DB:
+    description: 'if set to true, testcontainer will be created and tests will be run in DB'
     required: false
     default: 'false'
   ACTION_ENABLE_TESTING:
@@ -19,12 +19,11 @@ runs:
 
   - name: Display inputs
     run: |
-      echo ${{inputs.ACTION_ENABLE_TESTING}} 
-      echo ${{inputs.TESTING_WITH_DB}}
+      echo "${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
     
   - name: Test if 
-    if: (${{inputs.ACTION_ENABLE_TESTING}} == 'false' && ${{inputs.TESTING_WITH_DB}} == 'false')
+    if: (inputs.ACTION_ENABLE_TESTING == 'false' && inputs.TESTING_WITH_DB == 'false')
     run: |
       echo "if ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
