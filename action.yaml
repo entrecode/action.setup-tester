@@ -25,7 +25,7 @@ runs:
 
   - name: Display inputs outcome
     run: |
-      echo "${{display_inputs.outcome}}"
+      echo "${{steps.display_inputs.outcome}}"
     shell: bash
     
   - name: Test if both inputs are false
@@ -35,7 +35,7 @@ runs:
     shell: bash
 
   - name: Test if one input is true
-    if: (inputs.ACTION_ENABLE_TESTING == 'true' || inputs.TESTING_WITH_DB == 'true') && display_inputs.outcome == 'Success'
+    if: (inputs.ACTION_ENABLE_TESTING == 'true' || inputs.TESTING_WITH_DB == 'true') && steps.display_inputs.outcome == 'Success'
     run: |
       echo "if ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
