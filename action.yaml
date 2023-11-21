@@ -11,6 +11,10 @@ inputs:
     required: false
     default: 'false'
 
+# env:
+#   ACTION_ENABLE_TESTING: ${{ inputs.ACTION_ENABLE_TESTING }}
+#   TESTING_WITH_DB: ${{ inputs.TESTING_WITH_DB }}
+
 runs:
   using: 'composite'
   steps:
@@ -29,15 +33,15 @@ runs:
     shell: bash
     
   - name: Test if both inputs are false
-    if: (${{inputs.ACTION_ENABLE_TESTING}} == 'false' && ${{inputs.TESTING_WITH_DB}} == 'false')
+    if: (${{inputs.ACTION_ENABLE_TESTING == 'false'}} && ${{inputs.TESTING_WITH_DB == 'false'}})
     run: |
-      echo "if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "1 if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
   - name: Test if one input is true
     if: (inputs.ACTION_ENABLE_TESTING == 'true' || inputs.TESTING_WITH_DB == 'true') && steps.display_inputs.outcome == 'Success'
     run: |
-      echo "if one true ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "2 if one true ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
   - name: Test fromJson
@@ -46,25 +50,25 @@ runs:
     shell: bash
 
   - name: Test fromJson outcome false flase
-    if: (${{ fromJSON(inputs.ACTION_ENABLE_TESTING) }} == 'false' && ${{ fromJSON(inputs.TESTING_WITH_DB) }} == 'false')
+    if: (${{ fromJSON(inputs.ACTION_ENABLE_TESTING) == 'false' }} && ${{ fromJSON(inputs.TESTING_WITH_DB) == 'false' }})
     run: |
-      echo "if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "3 if both false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
   - name: Test fromJson outcome false true
-    if: (${{ fromJSON(inputs.ACTION_ENABLE_TESTING) }} == 'false' && ${{ fromJSON(inputs.TESTING_WITH_DB) }} == 'true')
+    if: (${{ fromJSON(inputs.ACTION_ENABLE_TESTING) == 'false' }} && ${{ fromJSON(inputs.TESTING_WITH_DB) == 'true' }})
     run: |
-      echo "if fasle true ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "4 if fasle true ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
   - name: Test fromJson outcome true flase
-    if: (${{ fromJSON(inputs.ACTION_ENABLE_TESTING) }} == 'true' && ${{ fromJSON(inputs.TESTING_WITH_DB) }} == 'false')
+    if: (${{ fromJSON(inputs.ACTION_ENABLE_TESTING) == 'true' }} && ${{ fromJSON(inputs.TESTING_WITH_DB) == 'false' }})
     run: |
-      echo "if true false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "5 if true false ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
 
   - name: Test fromJson outcome true true
-    if: (${{ fromJSON(inputs.ACTION_ENABLE_TESTING) }} == 'true' && ${{ fromJSON(inputs.TESTING_WITH_DB) }} == 'true')
+    if: (${{ fromJSON(inputs.ACTION_ENABLE_TESTING) == 'true' }} && ${{ fromJSON(inputs.TESTING_WITH_DB) == 'true' }})
     run: |
-      echo "if true true ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
+      echo "6 if true true ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
