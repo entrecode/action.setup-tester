@@ -19,11 +19,12 @@ runs:
 
   - name: Display inputs
     run: |
-      echo ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}
+      echo ${{inputs.ACTION_ENABLE_TESTING}} 
+      echo ${{inputs.TESTING_WITH_DB}}
     shell: bash
     
   - name: Test if 
-    if: (inputs.ACTION_ENABLE_TESTING == 'false' && inputs.TESTING_WITH_DB == 'false')
+    if: ({{inputs.ACTION_ENABLE_TESTING}} == 'false' && {{inputs.TESTING_WITH_DB}} == 'false')
     run: |
       echo "if ${{inputs.ACTION_ENABLE_TESTING}} ${{inputs.TESTING_WITH_DB}}"
     shell: bash
